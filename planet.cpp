@@ -326,7 +326,7 @@ int main(int argc, const char * argv[]) {
         model = glm::rotate(model, (GLfloat) (PI * i / 360 ) , glm::vec3(0.0f, 1.0f, 0.0f));
 
         if (cameraType == "Uranus") {
-            camera.SetPosition(glm::vec3(x + 0.5f, 0.0f, z+0.5f));
+            camera.SetPosition(glm::vec3(x + 0.5f, 0.0f, z+2.5f));
         }
 
         model = glm::scale( model, glm::vec3( 0.03f * scale ) );
