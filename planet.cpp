@@ -174,9 +174,14 @@ int main(int argc, const char * argv[]) {
         glUniformMatrix4fv( glGetUniformLocation( shader.Program, "view" ), 1, GL_FALSE, glm::value_ptr( view ) );
 
         //UFO
+        directionalShader.Use( );
+        GLint modelLoc = glGetUniformLocation( directionalShader.Program, "model" );
+        GLint viewLoc = glGetUniformLocation( directionalShader.Program, "view" );
+        GLint projLoc = glGetUniformLocation( directionalShader.Program, "projection" );
+
         model = glm::mat4(1);
         model = glm::translate(model, glm::vec3( camera.GetPosition( ).x - 0.5f, camera.GetPosition( ).y - 0.1, camera.GetPosition( ).z - 0.5f));
-        model = glm::scale( model, glm::vec3( 2.0f * scale ) );
+        model = glm::scale( model, glm::vec3( scale ) );
         if ( keys[GLFW_KEY_W]) {
             model = glm::rotate(model, (GLfloat) (-PI/24), glm::vec3(1.0f, 0.0f, -1.0f));
         }
@@ -351,9 +356,9 @@ int main(int argc, const char * argv[]) {
 
         // SUN
         lampShader.Use( );
-        GLint modelLoc = glGetUniformLocation( lampShader.Program, "model" );
-        GLint viewLoc = glGetUniformLocation( lampShader.Program, "view" );
-        GLint projLoc = glGetUniformLocation( lampShader.Program, "projection" );
+        modelLoc = glGetUniformLocation( lampShader.Program, "model" );
+        viewLoc = glGetUniformLocation( lampShader.Program, "view" );
+        projLoc = glGetUniformLocation( lampShader.Program, "projection" );
 
         glUniformMatrix4fv( viewLoc, 1, GL_FALSE, glm::value_ptr( view ) );
         glUniformMatrix4fv( projLoc, 1, GL_FALSE, glm::value_ptr( projection ) );
