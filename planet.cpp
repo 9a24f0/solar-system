@@ -374,36 +374,38 @@ int main(int argc, const char * argv[]) {
 
 void DoMovement() {
 
-    if ( keys[GLFW_KEY_W]) {
-        camera.ProcessKeyboard( FORWARD, deltaTime );
-    }
+    if ( cameraType == "" ) {
+        if ( keys[GLFW_KEY_W]) {
+            camera.ProcessKeyboard( FORWARD, deltaTime );
+        }
 
-    if ( keys[GLFW_KEY_S]) {
-        camera.ProcessKeyboard( BACKWARD, deltaTime );
-    }
+        if ( keys[GLFW_KEY_S]) {
+            camera.ProcessKeyboard( BACKWARD, deltaTime );
+        }
 
-    if ( keys[GLFW_KEY_A]) {
-        camera.ProcessKeyboard( LEFT, deltaTime );
-    }
+        if ( keys[GLFW_KEY_A]) {
+            camera.ProcessKeyboard( LEFT, deltaTime );
+        }
 
-    if ( keys[GLFW_KEY_D]) {
-        camera.ProcessKeyboard( RIGHT, deltaTime );
-    }
+        if ( keys[GLFW_KEY_D]) {
+            camera.ProcessKeyboard( RIGHT, deltaTime );
+        }
 
-    if ( keys[GLFW_KEY_UP]) {
-        camera.ProcessKeyboard( UP, deltaTime );
-    }
+        if ( keys[GLFW_KEY_UP]) {
+            camera.ProcessKeyboard( UP, deltaTime );
+        }
 
-    if ( keys[GLFW_KEY_DOWN]) {
-        camera.ProcessKeyboard( DOWN, deltaTime );
-    }
+        if ( keys[GLFW_KEY_DOWN]) {
+            camera.ProcessKeyboard( DOWN, deltaTime );
+        }
 
-    if (keys[GLFW_KEY_MINUS]) {
-        camera.DecreaseSpeed();
-    }
+        if (keys[GLFW_KEY_MINUS]) {
+            camera.DecreaseSpeed();
+        }
 
-    if (keys[GLFW_KEY_EQUAL]) {
-        camera.IncreaseSpeed();
+        if (keys[GLFW_KEY_EQUAL]) {
+            camera.IncreaseSpeed();
+        }
     }
 
     if (keys[GLFW_KEY_1]) {
@@ -468,7 +470,11 @@ void MouseCallback( GLFWwindow *window, double xPos, double yPos ) {
     lastX = xPos;
     lastY = yPos;
 
-    camera.ProcessMouseMovement( xOffset, yOffset );
+    if ( cameraType == "" ) {
+        camera.ProcessMouseMovement( xOffset, yOffset, true, true );
+    } else {
+        camera.ProcessMouseMovement( xOffset, yOffset );
+    }
 }
 
 void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
