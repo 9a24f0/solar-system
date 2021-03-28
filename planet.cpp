@@ -29,6 +29,8 @@ const double PI = 3.141592653589793238463;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 const GLfloat MAX_ROLL_ANGLE = PI/12;
 const GLfloat ZOOM_SPEED = 0.01f;
+const int Y_SEGMENTS = 50;
+const int X_SEGMENTS = 50;
 
 // Function prototypes
 void KeyCallback( GLFWwindow *window, int key, int scancode, int action, int mode );
@@ -95,6 +97,7 @@ int main(int argc, const char * argv[]) {
 
     // Load models
     Model earthModel( "resources/models/earth/Earth.obj" );
+    Model moonModel( "resources/models/moon/moon.obj" );
     Model space( "resources/models/space/space.obj" );
     Model sunModel( "resources/models/sun/sun.obj" );
     Model mercuryModel( "resources/models/mercury/mercury.obj" );
@@ -242,6 +245,18 @@ int main(int argc, const char * argv[]) {
         model = glm::rotate( model, angle, glm::vec3( 0.0f, 0.1f, 0.0f ) );
         glUniformMatrix4fv( glGetUniformLocation( shader.Program, "model" ), 1, GL_FALSE, glm::value_ptr( model ) );
         earthModel.Draw( shader );
+
+        // moon
+        model = glm::mat4(1);
+        angle = 0.02f * i  * speed;
+        radius = 3.0f * scale;
+        x = x + radius * sin(PI * 2 * angle / 360);
+        z = z + radius * cos(PI * 2 * angle / 360);
+        model = glm::translate( model, glm::vec3( x, 0.0f, z) );
+        model = glm::rotate(model, (GLfloat) (PI * i / 360 ) , glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::scale( model, glm::vec3( 0.125f * scale ) );
+        glUniformMatrix4fv( glGetUniformLocation( shader.Program, "model" ), 1, GL_FALSE, glm::value_ptr( model ) );
+        moonModel.Draw( shader );
 
         // MARS
         model = glm::mat4(1);
